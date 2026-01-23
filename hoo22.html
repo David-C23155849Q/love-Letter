@@ -1,0 +1,1089 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
+    <title> DEFULT NAME | Premium Experience</title> <!-- Replace with actual name -->
+    
+    <!-- External Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- GSAP for High-End Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        :root {
+            --bg-deep: #050505;
+            --primary: #ff2a6d;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none; /* Using custom cursor */
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* --- FILM GRAIN OVERLAY --- */
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* --- INTRO OVERLAY --- */
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #000;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+        #intro-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .enter-btn {
+            margin-top: 2rem;
+            padding: 15px 40px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            background: transparent;
+            border: 1px solid var(--text-main);
+            color: var(--text-main);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+        .enter-btn:hover {
+            background: var(--text-main);
+            color: #000;
+            box-shadow: 0 0 20px rgba(255,255,255,0.5);
+        }
+
+        /* --- CUSTOM CURSOR --- */
+        .cursor-dot, .cursor-outline {
+            position: fixed;
+            top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary);
+        }
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--primary);
+            transition: width 0.2s, height 0.2s;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            mix-blend-mode: difference;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0%;
+            height: 1px;
+            background: var(--primary);
+            transition: width 0.4s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-bg-text {
+            position: absolute;
+            font-size: 20vw;
+            font-weight: 900;
+            color: rgba(255,255,255,0.02);
+            font-family: 'Playfair Display', serif;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .heart-icon {
+            font-size: 5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); text-shadow: 0 0 0 rgba(255, 42, 109, 0.7); }
+            70% { transform: scale(1.1); text-shadow: 0 0 20px rgba(255, 42, 109, 0); }
+            100% { transform: scale(1); text-shadow: 0 0 0 rgba(255, 42, 109, 0); }
+        }
+
+        h1.hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            background: linear-gradient(to right, #fff, #b3b3b3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.hero-subtitle {
+            max-width: 500px;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        /* --- GALLERY SECTION --- */
+        .gallery-wrapper {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(to bottom, #050505, #0a0a0a);
+            position: relative;
+        }
+
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            z-index: 5;
+        }
+
+        .gallery-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        .gallery-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4rem;
+            max-width: 1200px;
+            width: 100%;
+            z-index: 5;
+        }
+
+        .gallery-stage {
+            position: relative;
+            width: 400px;
+            height: 600px;
+            background: #000;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+            border: 1px solid var(--glass-border);
+            flex-shrink: 0;
+        }
+
+        #galleryImage {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 40px 20px 20px 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: white;
+            opacity: 0;
+            transform: translateY(20px);
+            text-align: center;
+        }
+
+        /* --- QUOTE BOX --- */
+        .quote-box {
+            flex: 1;
+            max-width: 500px;
+            min-height: 300px;
+            background: rgba(20, 20, 30, 0.6);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-left: 4px solid var(--primary);
+            opacity: 0;
+        }
+
+        .quote-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+            line-height: 1;
+        }
+
+        #quoteText {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-style: italic;
+            line-height: 1.6;
+            color: #eee;
+        }
+
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: var(--primary);
+            width: 0%;
+            z-index: 6;
+        }
+
+        /* --- MUSIC PLAYER --- */
+        .music-widget {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(150%);
+            width: 90%;
+            max-width: 500px;
+            background: rgba(18, 18, 18, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 2000;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .music-widget.active {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .song-details h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+        
+        .song-details span {
+            font-size: 0.8rem;
+            color: var(--primary);
+            letter-spacing: 1px;
+        }
+
+        .visualizer-container {
+            width: 60px;
+            height: 30px;
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            margin-right: 20px;
+        }
+
+        .viz-bar {
+            flex: 1;
+            background: var(--primary);
+            height: 5px;
+            border-radius: 2px;
+            transition: height 0.05s ease;
+        }
+
+        .player-controls button {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: 10px;
+            transition: all 0.3s;
+        }
+        
+        .player-controls button:hover {
+            background: white;
+            color: black;
+            border-color: white;
+        }
+
+        /* --- CUSTOM CHATBOT STYLING --- */
+        .chat-fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), #ff6b6b);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: white;
+            box-shadow: 0 10px 30px rgba(255, 42, 109, 0.4);
+            z-index: 3000;
+            transition: transform 0.3s;
+            cursor: pointer; /* Fallback cursor */
+        }
+        .chat-fab:hover { transform: scale(1.1) rotate(10deg); }
+
+        .chat-window {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 500px;
+            background: #050505;
+            border: 1px solid var(--primary);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            z-index: 3000;
+            transform-origin: bottom right;
+            transform: scale(0);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.9);
+        }
+
+        .chat-window.open {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .chat-header {
+            background: #000;
+            padding: 15px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--glass-border);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+        .chat-header span { cursor: pointer; color: var(--primary); }
+
+        /* User Provided Structure */
+        #chat {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        #messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Message Bubbles */
+        .chat-msg {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        /* Pink User Message */
+        .msg-user {
+            background: var(--primary);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+            box-shadow: 0 4px 15px rgba(255, 42, 109, 0.3);
+        }
+
+        /* Dark Bot Message */
+        .msg-bot {
+            background: #1a1a1a;
+            color: #eee;
+            align-self: flex-start;
+            border: 1px solid #333;
+            border-bottom-left-radius: 2px;
+        }
+
+        /* Input Group */
+        .chat-input-group {
+            padding: 15px;
+            border-top: 1px solid var(--glass-border);
+            display: flex;
+            gap: 10px;
+            background: #050505;
+        }
+
+        #user-input {
+            flex: 1;
+            background: #111;
+            border: 1px solid #333;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            outline: none;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        #user-input:focus { border-color: var(--primary); }
+
+        #user-input button, .chat-input-group button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 15px;
+            border-radius: 20px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        
+        .chat-input-group button:hover { background: #d6235d; }
+
+        /* --- START: FINAL MESSAGE SECTION (Static, Pre-filled, Bottom of Page) --- */
+        .message-section {
+            padding: 100px 20px 50px;
+            background: #050505;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .message-container {
+            width: 100%;
+            max-width: 700px;
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            padding: 50px 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+            position: relative;
+            /* Initial state for animation */
+            opacity: 0;
+            transform: translateY(50px); 
+        }
+
+        /* Pink glow behind the box */
+        .message-container::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, var(--primary), transparent, var(--primary));
+            z-index: -1;
+            border-radius: 22px;
+            filter: blur(10px);
+            opacity: 0.4;
+        }
+
+        .message-header {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .message-content {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            color: #eee;
+            line-height: 1.8;
+        }
+
+        .message-content span {
+            display: block;
+            margin-top: 20px;
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* --- END: FINAL MESSAGE SECTION --- */
+
+        /* --- ADMIN & FOOTER --- */
+        footer {
+            padding: 50px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #444;
+            border-top: 1px solid #111;
+        }
+
+        .admin-trigger {
+            color: #111;
+            transition: color 0.3s;
+            user-select: none;
+        }
+        .admin-trigger:hover { color: var(--primary); }
+
+        .admin-modal {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: #0f0f0f;
+            border: 1px solid var(--primary);
+            padding: 30px;
+            border-radius: 10px;
+            z-index: 5000;
+            display: none;
+            opacity: 0;
+            transition: all 0.3s;
+            box-shadow: 0 0 50px rgba(255, 42, 109, 0.2);
+        }
+        .admin-modal.show { display: block; opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+        @media (max-width: 900px) {
+            .gallery-content { flex-direction: column; gap: 2rem; }
+            .gallery-stage { width: 80%; height: 400px; }
+            .quote-box { width: 80%; min-height: 200px; padding: 20px; }
+            #quoteText { font-size: 1.2rem; }
+            h1.hero-title { font-size: 2.5rem; }
+            .chat-window { width: 90%; right: 5%; bottom: 100px; }
+            nav { padding: 1.5rem 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- INTRO OVERLAY: Fixes Autoplay -->
+    <div id="intro-overlay">
+        <h1 style="font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 20px;">Name</h1>
+        <p style="color: #888; letter-spacing: 1px;">Headphones Recommended</p>
+        <button class="enter-btn" id="enterBtn">Enter Experience</button>
+    </div>
+
+    <div class="grain-overlay"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <nav>
+        <div class="logo">DEFULT NAME.</div> <!-- Replace with actual name -->
+        <div class="nav-links">
+            <a href="#" onclick="toggleMusic()">Music</a>
+            <a href="#gallery">Gallery</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-bg-text">Name.</div>
+        <div class="heart-icon">♥</div>
+        <h1 class="hero-title">Beautiful Memories</h1>
+        <p class="hero-subtitle">A collection of precious moments curated just for you.</p>
+    </section>
+
+    <section class="gallery-wrapper" id="gallery">
+        <div class="gallery-header">
+            <h2>Memories</h2>
+        </div>
+        <div class="gallery-content">
+            <div class="gallery-stage">
+                <img id="galleryImage" src="" alt="Gallery Image">
+                <div class="gallery-caption" id="galleryCaption">Loading...</div>
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="quote-box" id="quoteBox">
+                <div class="quote-icon">❝</div>
+                <p id="quoteText">Loading quote...</p>
+            </div>
+        </div>
+    </section>
+
+     <!-- --- START: PRE-FILLED MESSAGE SECTION (Below Gallery) --- -->
+    <section class="message-section">
+        <div class="message-container" id="finalMessageBox">
+            <h2 class="message-header"> message </h2>
+            <p class="message-content">
+               .....................<br><br>
+               .....................<br>
+               ...............................
+               
+                <span>- Forever Yours</span>
+            </p>
+        </div>
+    </section>
+    <!-- --- END: PRE-FILLED MESSAGE SECTION --- -->
+
+    <div class="music-widget" id="musicWidget">
+        <div class="song-details">
+            <h4 id="trackName">Unknown Track</h4>
+            <span id="artistName">Now Playing</span>
+        </div>
+        <div class="visualizer-container" id="visualizer">
+            <div class="viz-bar"></div><div class="viz-bar"></div><div class="viz-bar"></div>
+            <div class="viz-bar"></div><div class="viz-bar"></div>
+        </div>
+        <div class="player-controls">
+            <button id="prevBtn">⏮</button>
+            <button id="playBtn" style="background:var(--primary); border-color:var(--primary);">▶</button>
+            <button id="nextBtn">⏭</button>
+        </div>
+    </div>
+
+    <!-- --- CUSTOM CHATBOT (User Code + Styling) --- -->
+    
+    <!-- Floating Button -->
+    <div class="chat-fab" onclick="toggleChat()">💬</div>
+
+    <!-- Chat Window Container -->
+    <div class="chat-window" id="chat-window">
+        <div class="chat-header">
+            <span>bot </span>
+            <span onclick="toggleChat()">✕</span>
+        </div>
+        
+        <!-- User's Code Inside -->
+        <div id="chat">
+            <div id="messages">
+                <!-- Initial Greeting -->
+                <div class="chat-msg msg-bot">Hi there! How can I help?</div>
+            </div>
+            <div class="chat-input-group">
+                <input id="user-input" type="text" placeholder="Type a message..." onkeypress="handleEnter(event)"/>
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-modal" id="adminModal">
+        <h3 style="color: var(--primary); margin-bottom: 15px;">Admin Dashboard</h3>
+        <div style="margin-bottom: 10px;">
+            <label style="font-size: 0.8rem; display: block;">Upload MP3</label>
+            <input type="file" id="upSong" accept="audio/*" style="color: white;">
+        </div>
+        <div style="margin-bottom: 15px;">
+            <label style="font-size: 0.8rem; display: block;">Upload Photo</label>
+            <input type="file" id="upPhoto" accept="image/*" style="color: white;">
+        </div>
+        <button onclick="closeAdmin()" style="padding: 8px 20px; background: #333; color: white; border: none; border-radius: 5px;">Close</button>
+    </div>
+
+    <footer>
+        <p>Made with Emergent &copy; 2024</p>
+        <br>
+        <span class="admin-trigger" onclick="attemptAdmin()">Admin Access</span>
+    </footer>
+
+    <audio id="audioPlayer" preload="auto" crossorigin="anonymous"></audio>
+
+    <!-- Main Logic Script -->
+    <script>
+        /* --- DATA CONFIGURATION --- */
+        const galleryData = [
+            { img:'img1.png', quote: "........Quotes1........." },
+            { img: 'img2.png', quote: ".........Quotes2........." },
+            { img: 'img3.png', quote: "............Quotes3............" },
+            { img: 'img4.png', quote: "........................Quotes4........................" },
+            { img: 'img5.png', quote: "..........................Quotes5.........................." },
+            { img: 'img6.png', quote: ".........................Quotes6........................." },
+            { img: 'img7.png', quote: ".............................Quotes7............................." },
+            
+        ];
+
+        const musicList = [
+            { title: "let's fall in love", src: "song1.mp3" },
+            { title: "Lovely Melody 2", src: "Song-2.mp3" },
+            { title: "Beautiful Moment 3", src: "Song-3.mp3" }
+        ];
+
+        /* --- CURSOR --- */
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        window.addEventListener('mousemove', (e) => {
+            cursorDot.style.left = `${e.clientX}px`;
+            cursorDot.style.top = `${e.clientY}px`;
+            cursorOutline.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 500, fill: "forwards" });
+        });
+
+        /* --- GALLERY --- */
+        const imgEl = document.getElementById('galleryImage');
+        const captionEl = document.getElementById('galleryCaption');
+        const quoteBox = document.getElementById('quoteBox');
+        const quoteText = document.getElementById('quoteText');
+        const progressEl = document.getElementById('progressBar');
+
+        let currentImgIndex = 0;
+
+         // ✅ instant transition
+         const FADE_DURATION = 1.0; 
+         const DISPLAY_DURATION = 5000;
+
+         /* 🔥 PRELOAD IMAGES */
+         galleryData.forEach(d => {
+         const img = new Image();
+         img.src = d.img;
+        });
+
+        function showNextImage() {
+         currentImgIndex = (currentImgIndex + 1) % galleryData.length;
+
+         gsap.to([imgEl, captionEl, quoteBox], {
+         opacity: 0,
+         y: -20,
+         duration: FADE_DURATION,
+         onComplete: () => {
+            const data = galleryData[currentImgIndex];
+
+            // ✅ change image instantly
+            imgEl.src = data.img;
+            captionEl.innerText = `Memory #${currentImgIndex + 1}`;
+            quoteText.innerText = data.quote;
+
+            gsap.to([imgEl, captionEl, quoteBox], {
+                opacity: 1,
+                y: 0,
+                duration: FADE_DURATION
+            });
+
+            // ✅ reset progress bar instantly
+            progressEl.style.transition = 'none';
+            progressEl.style.width = '0%';
+
+            // ✅ start progress immediately (no timeout)
+            requestAnimationFrame(() => {
+                progressEl.style.transition = `width ${DISPLAY_DURATION}ms linear`;
+                progressEl.style.width = '100%';
+            });
+
+            setTimeout(showNextImage, DISPLAY_DURATION);
+        }
+    });
+}
+
+window.addEventListener('load', () => {
+    const firstData = galleryData[0];
+
+    // ✅ show first image immediately
+    imgEl.src = firstData.img;
+    captionEl.innerText = "Memory #1";
+    quoteText.innerText = firstData.quote;
+
+    gsap.set([imgEl, captionEl, quoteBox], {
+        opacity: 1,
+        y: 0
+    });
+
+    // ✅ start progress bar instantly
+    progressEl.style.transition = `width ${DISPLAY_DURATION}ms linear`;
+    progressEl.style.width = '100%';
+
+    setTimeout(showNextImage, DISPLAY_DURATION);
+});
+
+
+        /* --- MUSIC PLAYER & AUTOPLAY FIX --- */
+        const audio = document.getElementById('audioPlayer');
+        const playBtn = document.getElementById('playBtn');
+        const widget = document.getElementById('musicWidget');
+        const introOverlay = document.getElementById('intro-overlay');
+        const enterBtn = document.getElementById('enterBtn');
+        let isPlaying = false;
+        let currentSongIndex = 0;
+
+        function loadSong(index) {
+            audio.src = musicList[index].src;
+            document.getElementById('trackName').innerText = musicList[index].title;
+        }
+        loadSong(0);
+
+        let audioCtx, analyser, source;
+        const vizContainer = document.getElementById('visualizer');
+        const bars = vizContainer.querySelectorAll('.viz-bar');
+
+        function initAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                analyser = audioCtx.createAnalyser();
+                source = audioCtx.createMediaElementSource(audio);
+                source.connect(analyser);
+                analyser.connect(audioCtx.destination);
+                analyser.fftSize = 32; 
+                const dataArray = new Uint8Array(analyser.frequencyBinCount);
+                function animateVisualizer() {
+                    requestAnimationFrame(animateVisualizer);
+                    analyser.getByteFrequencyData(dataArray);
+                    bars.forEach((bar, i) => bar.style.height = `${(dataArray[i*2]/255)*30+5}px`);
+                }
+                animateVisualizer();
+            } else if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function startMusicSystem() {
+            initAudioContext();
+            audio.volume = 0.5; // Start at 50% volume
+            audio.play();
+            isPlaying = true;
+            playBtn.innerText = "⏸";
+            widget.classList.add('active');
+        }
+
+        function toggleMusic() {
+            if(!isPlaying) {
+                initAudioContext();
+                audio.play();
+                playBtn.innerText = "⏸";
+                isPlaying = true;
+                widget.classList.add('active');
+            } else {
+                audio.pause();
+                playBtn.innerText = "▶";
+                isPlaying = false;
+            }
+        }
+
+        playBtn.addEventListener('click', toggleMusic);
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            currentSongIndex = (currentSongIndex + 1) % musicList.length;
+            loadSong(currentSongIndex);
+            if(isPlaying) audio.play();
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            currentSongIndex = (currentSongIndex - 1 + musicList.length) % musicList.length;
+            loadSong(currentSongIndex);
+            if(isPlaying) audio.play();
+        });
+
+        audio.addEventListener('ended', () => {
+            currentSongIndex = (currentSongIndex + 1) % musicList.length;
+            loadSong(currentSongIndex);
+            audio.play();
+        });
+
+        // --- INTRO LOGIC (Crucial for Autoplay) ---
+        window.addEventListener('load', () => {
+            
+            // Check if user has visited before
+            const hasVisited = localStorage.getItem('Name_visited');
+
+            if (hasVisited) {
+                // If they have visited, try autoplay immediately
+                introOverlay.classList.add('hidden');
+                startMusicSystem();
+            } else {
+                // If first time, show overlay to force interaction
+                // When they click "Enter", we unlock audio
+                enterBtn.addEventListener('click', () => {
+                    startMusicSystem();
+                    introOverlay.classList.add('hidden');
+                    // Remember that they visited
+                    localStorage.setItem('defalt_visited', 'true');
+                });
+            }
+        });
+
+        /* --- CUSTOM CHATBOT LOGIC --- */
+        const WEBHOOK_URL = 'your webhook url'; // ← Webhook node URL
+
+        function toggleChat() {
+            document.getElementById('chat-window').classList.toggle('open');
+            if(document.getElementById('chat-window').classList.contains('open')) {
+                document.getElementById('user-input').focus();
+            }
+        }
+
+        function handleEnter(e) { 
+            if(e.key === 'Enter') sendMessage(); 
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('user-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            // Add User Message
+            addMessage('You', text);
+            input.value = '';
+
+            const res = await fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: text }),
+            });
+
+            const data = await res.json().catch(() => ({}));
+            // Add Bot Message
+            addMessage('Bot', data.reply || 'No reply');
+        }
+
+        // Modified addMessage to include styling classes
+        function addMessage(sender, text) {
+            const box = document.getElementById('messages');
+            const div = document.createElement('div');
+            
+            // Apply classes for styling
+            div.className = 'chat-msg ' + (sender === 'You' ? 'msg-user' : 'msg-bot');
+            
+            // Optionally hide "You:" prefix for cleaner look, or keep it.
+            // keeping it as per your original code:
+            div.textContent = sender + ': ' + text;
+            
+            box.appendChild(div);
+            box.scrollTop = box.scrollHeight; // Auto scroll to bottom
+        }
+
+        /* --- START: ANIMATION FOR FINAL MESSAGE BOX --- */
+        gsap.registerPlugin(ScrollTrigger);
+
+
+        gsap.to("#finalMessageBox", {
+            scrollTrigger: {
+                trigger: ".message-section",
+                start: "top 80%", 
+                end: "bottom 20%",
+                scrub: 1, 
+                toggleActions: "play none none reverse"
+            },
+            y: 0,   
+            opacity: 1, 
+            ease: "power2.out"
+        });
+        /* --- END: ANIMATION FOR FINAL MESSAGE BOX --- */
+
+        /* --- ADMIN --- */
+        const adminModal = document.getElementById('adminModal');
+        function attemptAdmin() {
+            const pass = prompt("Enter Admin Password:");
+            if(pass === "Name") adminModal.classList.add('show');
+        }
+        function closeAdmin() { adminModal.classList.remove('show'); }
+
+        document.getElementById('upSong').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if(file) {
+                musicList.push({ title: file.name, src: URL.createObjectURL(file) });
+                alert("Song added to playlist!");
+            }
+        });
+
+        document.getElementById('upPhoto').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if(file) {
+                galleryData.push({ img: URL.createObjectURL(file), quote: "A new beautiful moment ❤️" });
+                alert("Photo added to gallery!");
+            }
+        });
+
+        gsap.from(".hero-title", { duration: 1.5, y: 50, opacity: 0, ease: "power3.out", delay: 0.2 });
+        gsap.from(".hero-subtitle", { duration: 1.5, y: 30, opacity: 0, ease: "power3.out", delay: 0.4 });
+        gsap.from(".heart-icon", { duration: 1, scale: 0, opacity: 0, ease: "elastic.out(1, 0.3)", delay: 0.6 });
+    </script>
+    <script>
+  const audio = document.getElementById("song");
+  document.body.addEventListener("click", () => {
+    audio.muted = false;
+    audio.play();
+  }, { once: true });
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
