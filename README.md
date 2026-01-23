@@ -59,11 +59,12 @@ Performance & accessibility polish
 
 👋 Creator
 
-Made with intent by Abhay
-Frontend Dev • UI Explorer • Experience Builder
+Made with intent by Abhay 
+• Frontend Dev • UI Explorer • Experience Builder
 
 🔗 GitHub: (https://github.com/AbhayMalviya-dev)
 🔗 LinkedIn: (www.linkedin.com/in/abhay-malviya-43328b380)
 
 ⭐ If this made you pause
 Drop a ⭐ — it means the experience worked.
+
