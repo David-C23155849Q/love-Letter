@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
 
-    <title>NAME | Premium Experience</title> <!-- Replace with actual name -->
+    <title>Love Letter to my wifey</title> <!-- Replace with actual name -->
     
     <!-- External Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -644,9 +644,9 @@
 
     <!-- INTRO OVERLAY: Fixes Autoplay -->
     <div id="intro-overlay">
-        <h1 style="font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 20px;">Name</h1>
-        <p style="color: #888; letter-spacing: 1px;">Headphones Recommended</p>
-        <button class="enter-btn" id="enterBtn">Enter Experience</button>
+        <h1 style="font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 20px;">I love you</h1>
+        <p style="color: #888; letter-spacing: 1px;">Mai Keisha</p>
+        <button class="enter-btn" id="enterBtn">Click Here</button>
     </div>
 
     <div class="grain-overlay"></div>
@@ -654,7 +654,7 @@
     <div class="cursor-outline"></div>
 
     <nav>
-        <div class="logo">DEFULT NAME.</div> <!-- Replace with actual name -->
+        <div class="logo">I love you Nyasha</div> <!-- Replace with actual name -->
         <div class="nav-links">
             <a href="#" onclick="toggleMusic()">Music</a>
             <a href="#gallery">Gallery</a>
@@ -662,42 +662,57 @@
     </nav>
 
     <section class="hero">
-        <div class="hero-bg-text">Name.</div>
+        <div class="hero-bg-text">Ebby</div>
         <div class="heart-icon">♥</div>
         <h1 class="hero-title">Beautiful Memories</h1>
-        <p class="hero-subtitle">A collection of precious moments curated just for you.</p>
+        <p class="hero-subtitle">A collection of our precious moments curated just for you.</p>
     </section>
 
     <section class="gallery-wrapper" id="gallery">
-        <div class="gallery-header">
-            <h2>Memories</h2>
-        </div>
-        <div class="gallery-content">
-            <div class="gallery-stage">
-                <img id="galleryImage" src="" alt="Gallery Image">
-                <div class="gallery-caption" id="galleryCaption">Loading...</div>
-                <div class="progress-bar" id="progressBar"></div>
-            </div>
-            <div class="quote-box" id="quoteBox">
-                <div class="quote-icon">❝</div>
-                <p id="quoteText">Loading quote...</p>
-            </div>
-        </div>
-    </section>
+    <div class="gallery-header">
+        <h2>Our Beautiful Memories ❤️</h2>
+        <p class="gallery-subtitle">
+            Every picture tells a story, and every story reminds me how lucky I am to have you.
+        </p>
+    </div>
 
-     <!-- --- START: PRE-FILLED MESSAGE SECTION (Below Gallery) --- -->
-    <section class="message-section">
-        <div class="message-container" id="finalMessageBox">
-            <h2 class="message-header"> message </h2>
-            <p class="message-content">
-               .....................<br><br>
-               .....................<br>
-               ...............................
-               
-                <span>- Forever Yours</span>
-            </p>
+    <div class="gallery-content">
+        <div class="gallery-stage">
+            <img id="galleryImage" src="" alt="Gallery Image">
+            <div class="gallery-caption" id="galleryCaption">Loading...</div>
+            <div class="progress-bar" id="progressBar"></div>
         </div>
-    </section>
+
+        <div class="quote-box" id="quoteBox">
+            <div class="quote-icon">❝</div>
+            <p id="quoteText">Loading quote...</p>
+        </div>
+    </div>
+</section>
+
+     
+    <!-- --- START: PRE-FILLED MESSAGE SECTION (Below Gallery) --- -->
+<section class="message-section">
+    <div class="message-container" id="finalMessageBox">
+        <h2 class="message-header">A Little Message For You ❤️</h2>
+        <p class="message-content">
+            My dearest Nyasha,<br><br>
+
+            Thank you for filling my life with love, laughter, and happiness.
+            Every moment with you is a memory I cherish, and every day I fall
+            in love with you a little more.<br><br>
+
+            No matter where life takes us, I promise to always choose you,
+            support you, and love you with all my heart. You are my favorite
+            person, my peace, and my greatest blessing.<br><br>
+
+            I love you today, tomorrow, and always. ❤️
+
+            <span>— Forever Yours ❤️</span>
+        </p>
+    </div>
+</section>
+
     <!-- --- END: PRE-FILLED MESSAGE SECTION --- -->
 
     <div class="music-widget" id="musicWidget">
@@ -755,7 +770,7 @@
     </div>
 
     <footer>
-        <p>Made with Emergent &copy; 2024</p>
+        <p>Made with love &copy; 2026</p>
         <br>
         <span class="admin-trigger" onclick="attemptAdmin()">Admin Access</span>
     </footer>
@@ -766,16 +781,14 @@
     <script>
         /* --- DATA CONFIGURATION --- */
         const galleryData = [
-            { img:'img1.png', quote: ".......Quotes1........." },
-            { img: 'img2.png', quote: "......Quotes2........." },
-            { img: 'img3.png', quote: ".......Quotes3.........." },
-            { img: 'img4.png', quote: "........Quotes4............" },
-            { img: 'img5.png', quote: "........Quotes5........." },
-            { img: 'img6.png', quote: ".......Quotes6............" },
-            { img: 'img7.png', quote: ".......Quotes7............." },
-            
-        ];
-
+    { img:'img1.png', quote: "Every moment with you becomes a memory I never want to forget. ❤️" },
+    { img:'img2.png', quote: "You are my favorite chapter in the beautiful story of my life. ✨" },
+    { img:'img3.png', quote: "Looking at this picture reminds me how lucky I am to have you. 💕" },
+    { img:'img4.png', quote: "Some memories fade with time, but the ones with you stay forever. 🌹" },
+    { img:'img5.png', quote: "My heart smiles every time I remember the moments we shared. ❤️" },
+    { img:'img6.png', quote: "No matter where life takes us, these memories will always be precious. 🥹" },
+    { img:'img7.png', quote: "I would choose you again and again, in every lifetime. Forever yours. 💖" },
+];
         const musicList = [
             { title: "let's fall in love", src: "song1.mp3" }
         ];
@@ -1065,13 +1078,15 @@ window.addEventListener('load', () => {
         gsap.from(".hero-subtitle", { duration: 1.5, y: 30, opacity: 0, ease: "power3.out", delay: 0.4 });
         gsap.from(".heart-icon", { duration: 1, scale: 0, opacity: 0, ease: "elastic.out(1, 0.3)", delay: 0.6 });
     </script>
-    <script>
-  const audio = document.getElementById("song");
-  document.body.addEventListener("click", () => {
-    audio.muted = false;
-    audio.play();
-  }, { once: true });
-</script>
+    <!-- <script>
+
+//   const audio = document.getElementById("song");
+//   document.body.addEventListener("click", () => {
+//     audio.muted = false;
+//     audio.play();
+//   }, { once: true });
+
+</script> -->
 </body>
 </html>
 
