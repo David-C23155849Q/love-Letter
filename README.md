@@ -102,9 +102,9 @@ Full-Stack Developer
 
 ## Connect With Me
 
-- **GitHub:** https://github.com/YOUR_USERNAME
-- **LinkedIn:** https://linkedin.com/in/YOUR_PROFILE
-- **Portfolio:** https://YOUR_PORTFOLIO_URL
+- **GitHub:** https://github.com/David-C23155849Q
+
+- **Portfolio:** http://sitholedavid.infinityfreeapp.com/
 
 ---
 
